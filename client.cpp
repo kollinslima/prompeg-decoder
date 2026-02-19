@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
     for(;;) {
         myPacketBuffer -> updateFecQueue();
         myPacketBuffer -> fecRecovery();
-        myPacketBuffer -> updateMediaQueue( mySocketUtility -> output_Sockfd , stoi(maxDelay) * 100 );
+        myPacketBuffer -> updateMediaQueue( mySocketUtility -> output_Sockfd , atoi(maxDelay.c_str()) * 100 );
         myPacketBuffer -> updateMinSN();
 
         myMonitor -> updateRecovered(myPacketBuffer -> recovered);

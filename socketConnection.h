@@ -65,7 +65,8 @@ class socketUtility {
         bool isMulticastAddress(const char* mediaIP) {
             string IPstr(mediaIP);
             string firstByteStr = IPstr.substr(0 , 3);
-            if(stoi(firstByteStr) >= 224 && stoi(firstByteStr) <= 239) {
+            int firstByte = atoi(firstByteStr.c_str());
+            if(firstByte >= 224 && firstByte <= 239) {
                 return true;
             }
             else {
