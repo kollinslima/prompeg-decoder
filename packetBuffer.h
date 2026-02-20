@@ -62,6 +62,30 @@ class packetBuffer {
                 emptyQueue -> enqueue(target);
             }
         }
+        node* getFreeNode() {
+            node *temp = emptyQueue -> dequeue();
+            if (temp != NULL)
+                return temp;
+
+            // If emptyQueue is empty, recycle from mediaQueue head (oldest packet)
+            temp = mediaQueue -> dequeue();
+            if (temp != NULL) {
+                temp -> next = NULL;
+                temp -> dataUsed = 0;
+                return temp;
+            }
+
+            // If mediaQueue is also empty (unlikely but possible), recycle from fecQueue head
+            temp = fecQueue -> dequeue();
+            if (temp != NULL) {
+                temp -> next = NULL;
+                temp -> dataUsed = 0;
+                return temp;
+            }
+
+            return NULL;
+        }
+
         void newMediaPacket(const void *buffer, size_t length) {
             rtpPacket_ *rtpPacket = (rtpPacket_*) buffer;
             uint16_t currentSN = ntohs(rtpPacket -> rtpHeader.sequenceNum);
@@ -72,7 +96,7 @@ class packetBuffer {
             if( (currentSN - 1) > lastSN && lastSN != 0 ) {
                 int emptyCounter = (currentSN - lastSN) - 1;
                 for(int i = 0 ; i < emptyCounter ; i++) {
-                    node *temp = emptyQueue -> dequeue();
+                    node *temp = getFreeNode();
                     if(temp == NULL)
                         return;
                     temp -> dataUsed = 0;
@@ -87,7 +111,7 @@ class packetBuffer {
                 mediaSSRC = ntohl(rtpPacket -> rtpHeader.ssrc);
             }
 
-            node *temp = emptyQueue -> dequeue();
+            node *temp = getFreeNode();
             if(temp == NULL)
                 return;
             temp -> dataUsed = length;
@@ -96,7 +120,7 @@ class packetBuffer {
             mediaQueue -> enqueue(temp);
         }
         void newFecPacket(const void *buffer, size_t length) {
-            node *temp = emptyQueue -> dequeue();
+            node *temp = getFreeNode();
             if(temp == NULL)
                 return;
             temp -> dataUsed = length;

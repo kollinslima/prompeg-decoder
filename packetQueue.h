@@ -68,7 +68,7 @@ class node {
             }
             else {
                 uint32_t thisTS = this -> getTS();
-                if(thisTS + maxTimeRange < currentTS) {
+                if ((int32_t)(currentTS - thisTS) > maxTimeRange) {
                     return 1;
                 }
                 else {
