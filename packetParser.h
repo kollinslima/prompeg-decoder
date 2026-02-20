@@ -1,7 +1,6 @@
 #ifndef INCLUDED_PACKETPARSER_H
 #define INCLUDED_PACKETPARSER_H
 
-#include <iostream>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,9 +8,6 @@
 #include <string.h>
 #include <arpa/inet.h>
 #define CHECK_BIT(var, pos) !!((var) & (1 << (pos)))
-
-using namespace std;
-
 
 /*
     ==RTP packet==
