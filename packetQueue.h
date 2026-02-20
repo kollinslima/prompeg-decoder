@@ -98,8 +98,7 @@ class node {
                         counter++;
                     }
                 }
-                printf("fucked up\n");
-                exit(1);
+                return 0;
             }
         }
 };
