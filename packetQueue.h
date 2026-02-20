@@ -42,7 +42,7 @@ class node {
             }
         }
         uint16_t getSNBase() {
-            if(dataUsed != 1344) {
+            if(dataUsed < 28) {
                 printf("getSNBase: %d\n" , dataUsed);
                 exit(1);
             }
@@ -52,7 +52,7 @@ class node {
             }
         }
         uint8_t getOffset() {
-            if(dataUsed != 1344) {
+            if(dataUsed < 28) {
                 printf("getOffset\n");
                 exit(1);
             }
@@ -62,7 +62,7 @@ class node {
             }
         }
         uint8_t getNA() {
-            if(dataUsed != 1344) {
+            if(dataUsed < 28) {
                 printf("getNA\n");
                 exit(1);
             }
