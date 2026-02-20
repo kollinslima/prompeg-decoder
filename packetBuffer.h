@@ -73,6 +73,8 @@ class packetBuffer {
                 int emptyCounter = (currentSN - lastSN) - 1;
                 for(int i = 0 ; i < emptyCounter ; i++) {
                     node *temp = emptyQueue -> dequeue();
+                    if(temp == NULL)
+                        return;
                     temp -> dataUsed = 0;
                     temp -> next = NULL;
                     mediaQueue -> enqueue(temp);
@@ -86,6 +88,8 @@ class packetBuffer {
             }
 
             node *temp = emptyQueue -> dequeue();
+            if(temp == NULL)
+                return;
             temp -> dataUsed = length;
             temp -> next = NULL;
             memcpy(temp -> dataBuffer , buffer , length);
@@ -93,6 +97,8 @@ class packetBuffer {
         }
         void newFecPacket(const void *buffer, size_t length) {
             node *temp = emptyQueue -> dequeue();
+            if(temp == NULL)
+                return;
             temp -> dataUsed = length;
             temp -> next = NULL;
             memcpy(temp -> dataBuffer , buffer , length);
