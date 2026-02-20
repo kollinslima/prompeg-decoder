@@ -44,32 +44,23 @@ class node {
         uint16_t getSNBase() {
             if(dataUsed < 28) {
                 printf("getSNBase: %d\n" , dataUsed);
-                exit(1);
             }
-            else {
-                fecPacket_ *fecPacket = (fecPacket_ *) dataBuffer;
-                return ntohs(fecPacket -> fecHeader.SNBase);
-            }
+            fecPacket_ *fecPacket = (fecPacket_ *) dataBuffer;
+            return ntohs(fecPacket -> fecHeader.SNBase);
         }
         uint8_t getOffset() {
             if(dataUsed < 28) {
                 printf("getOffset\n");
-                exit(1);
             }
-            else {
-                fecPacket_ *fecPacket = (fecPacket_ *) dataBuffer;
-                return fecPacket -> fecHeader.offset;
-            }
+            fecPacket_ *fecPacket = (fecPacket_ *) dataBuffer;
+            return fecPacket -> fecHeader.offset;
         }
         uint8_t getNA() {
             if(dataUsed < 28) {
                 printf("getNA\n");
-                exit(1);
             }
-            else {
-                fecPacket_ *fecPacket = (fecPacket_ *) dataBuffer;
-                return fecPacket -> fecHeader.NA;
-            }
+            fecPacket_ *fecPacket = (fecPacket_ *) dataBuffer;
+            return fecPacket -> fecHeader.NA;
         }
         int isTsToolate(uint32_t currentTS , int maxTimeRange) {
             if(currentTS == 0) {
